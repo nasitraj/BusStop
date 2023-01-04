@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -27,7 +28,16 @@ public class StopTimeFile {
 
 
     public void run() throws ParseException {
-        InputStream is = context.getResources().openRawResource(R.raw.updatedstoptimes);
+        Date date = new Date();
+        InputStream is = null;
+        int day = getDay(date);
+        if(day > 1  && day <= 6) {
+            is = context.getResources().openRawResource(R.raw.updatedstoptimes);
+        }else if(day == 7){
+            is = context.getResources().openRawResource(R.raw.saturdaytimes);
+        }else if(day == 1){
+            is = context.getResources().openRawResource(R.raw.sundaytimes);
+        }
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         readData(reader);
     }
@@ -72,31 +82,22 @@ public class StopTimeFile {
 
             if(t.getTime().after(date))
                 trips.add(t);
-//            int busIndex = -1;
-//            Boolean check = false;
-//            for(int i = 0; i<buses.size();i++){
-//                if(buses.get(i).getBusNum() == Integer.parseInt(busNo[0])){
-//                    check = true;
-//                    busIndex = i;
-//                }
-//            }
-//            if(!check){
-//                tripData[3] = tripData[3].replaceAll("\"", "");
-//                Bus bus = new Bus(Integer.parseInt(busNo[0]), tripData[3]);
-//                Trips t = new Trips(tripData[1],Integer.parseInt(busNo[0]));
-//                bus.addTrip(t);
-//                buses.add(bus);
-//            }else{
-//                Trips t = new Trips(tripData[1],Integer.parseInt(busNo[0]));
-//                buses.get(busIndex).addTrip(t);
-//            }
         }
 
         return trips;
+
     }
 
 
     public ArrayList<Trips> getData(){
         return trips;
+    }
+
+
+    public int getDay(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        return day;
     }
 }
