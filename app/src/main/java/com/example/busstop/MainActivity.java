@@ -161,8 +161,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }else {
             @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+//            longitude = location.getLongitude();
+//            latitude = location.getLatitude();
+                latitude = -1;
+                longitude = -1;
         }
     }
 
