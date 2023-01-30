@@ -24,6 +24,11 @@ This application is Android base. It show all the bus stops in ottawa and bus sh
 - GPS
 - SQL
 
+#### Permissions
+
+- Location
+- Internet
+
 [Back To The Top](#bus-stop-application)
 
 ---
